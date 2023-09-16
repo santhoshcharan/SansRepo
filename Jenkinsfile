@@ -13,7 +13,7 @@ pipeline {
       }
       post {
         success {
-          archiveArtifacts artifacts: 'boa-sept/target/*.war', followSymlinks: false
+          archiveArtifacts artifacts: 'boa-sept/target/boa-sept.war', followSymlinks: false
         }
       }
     }
