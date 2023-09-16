@@ -1,0 +1,44 @@
+- name: Install Jenkins
+  hosts: all
+
+  vars:
+    keyring: /usr/share/keyrings/jenkins-keyring.asc
+
+  tasks:
+    - name: Install Java
+      package:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+      with_items:
+        - default-jdk
+
+    - name: Create keyring
+      file:
+        state: touch
+        path: "{{ keyring }}"
+
+    - name: Add GPG Key
+      apt_key:
+        url: https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+        keyring: "{{ keyring }}"
+
+    - name: Add Jenkins Repository
+      apt_repository:
+        repo: deb [signed-by={{ keyring }}] https://pkg.jenkins.io/debian-stable binary/
+
+    - name: Install Jenkins
+      package:
+        name: jenkins
+        state: present
+        update_cache: yes
+
+    - name: Retrieve Jenkins Initial Admin Password
+      shell: cat /var/lib/jenkins/secrets/initialAdminPassword
+      register: jenkins_initialAdminPassword
+      ignore_errors: yes
+
+    - name: Print initialAdminPassword
+      debug: var=jenkins_initialAdminPassword.stdout_lines
+      ignore_errors: yes
+      
