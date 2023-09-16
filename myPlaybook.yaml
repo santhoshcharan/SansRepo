@@ -37,4 +37,7 @@
         - package
     - name: Print-POLL SCM
       debug:
-        msg: Hi from Poll SCM  Jenkins Trigger! 
+        msg: Hi from Poll SCM  Jenkins Trigger!
+    - name: Print-GITHUB WEBHOOK Trigger
+      debug:
+        msg: Hi with GITHUB WEBHOOK Trigger
