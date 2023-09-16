@@ -35,3 +35,6 @@
         - default-jdk
       tags:
         - package
+    - name: Print-POLL SCM
+      debug:
+        msg: Hi from Poll SCM  Jenkins Trigger! 
